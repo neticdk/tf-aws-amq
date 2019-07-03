@@ -33,7 +33,7 @@ variable "host_instance_type" {
 
 variable "publicly_accessible" {
   description = "Whether to enable connections from applications outside of the VPC that hosts the broker's subnets"
-  type        = boolean
+  type        = bool
   default     = false
 }
 
@@ -68,13 +68,13 @@ variable "maintenance_window_start_time_time_zone" {
 
 variable "logs_general" {
   description = "Enables general logging via CloudWatch"
-  type        = boolean
+  type        = bool
   default     = true
 }
 
 variable "logs_audit" {
   description = "Enables audit logging. User management action made using JMX or the ActiveMQ Web Console is logged"
-  type        = boolean
+  type        = bool
   default     = true
 }
 
