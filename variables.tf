@@ -109,7 +109,7 @@ variable "configuration_data" {
 }
 
 variable "apply_immediately" {
-  description = "Apply changes to broker immediately - might cause a renoot"
+  description = "Apply changes to broker immediately - might cause a reboot"
   type        = bool
   default     = false
 }
