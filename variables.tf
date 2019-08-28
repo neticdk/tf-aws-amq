@@ -78,6 +78,18 @@ variable "logs_audit" {
   default     = true
 }
 
+variable "additional_users" {
+  description = "Additional AmazonMQ users"
+  default     = null
+  type = map(object({
+    id             = number
+    username       = string
+    password       = string
+    console_access = bool
+    groups         = list(string)
+  }))
+}
+
 variable "username" {
   description = "Username"
   type        = string
@@ -94,4 +106,10 @@ variable "configuration_data" {
   description = "The broker configuration in XML format"
   type        = string
   default     = null
+}
+
+variable "apply_immediately" {
+  description = "Apply changes to broker immediately - might cause a renoot"
+  type        = bool
+  default     = false
 }

@@ -8,6 +8,15 @@
 locals {
   password = length(var.password) > 0 ? var.password : random_string.password.result
 
+  additional_users = var.additional_users == null ? [] : [for u in var.additional_users : {
+    id             = u.id
+    username       = u.username
+    password       = length(u.password) > 0 ? u.password : random_password.additional_user_password[u.id].result
+    groups         = u.groups
+    console_access = u.console_access
+  }]
+  password_count = var.additional_users == null ? 0 : element(sort([for x in values(var.additional_users) : x.id]), length(values(var.additional_users)) - 1) + 1
+
   tags = {
     Terraform = "true"
   }
@@ -18,8 +27,14 @@ resource "random_string" "password" {
   special = false
 }
 
+resource "random_password" "additional_user_password" {
+  count   = local.password_count
+  length  = 16
+  special = false
+}
+
 resource "aws_mq_broker" "this" {
-  apply_immediately          = true
+  apply_immediately          = var.apply_immediately
   auto_minor_version_upgrade = true
   broker_name                = var.broker_name
 
@@ -54,6 +69,22 @@ resource "aws_mq_broker" "this" {
     password       = local.password
     groups         = ["admin"]
     console_access = true
+  }
+
+  dynamic user {
+    for_each = local.additional_users == null ? [] : [for u in local.additional_users : {
+      username       = u.username
+      password       = u.password
+      groups         = u.groups
+      console_access = u.console_access
+    }]
+
+    content {
+      username       = user.value.username
+      password       = user.value.password
+      groups         = user.value.groups
+      console_access = user.value.console_access
+    }
   }
 
   tags = merge(var.tags, local.tags)
