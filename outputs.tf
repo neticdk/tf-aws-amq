@@ -56,3 +56,9 @@ output "password" {
   description = "AmazonMQ admin password"
   sensitive   = true
 }
+
+output "additional_users" {
+  description = "AmazonMQ additional users credentials"
+  value       = local.additional_users
+  sensitive   = true
+}
