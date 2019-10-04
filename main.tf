@@ -102,3 +102,25 @@ resource "aws_mq_configuration" "this" {
   data           = var.configuration_data
 }
 
+
+data "aws_iam_policy_document" "amazonmq_log_publishing_policy" {
+  statement {
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:PutLogEventsBatch",
+    ]
+
+    resources = ["arn:aws:logs:*:*:log-group:/aws/amazonmq/*"]
+
+    principals {
+      identifiers = ["mq.amazonaws.com"]
+      type        = "Service"
+    }
+  }
+}
+
+resource "aws_cloudwatch_log_resource_policy" "amazonmq_log_publishing_policy" {
+  policy_document = "${data.aws_iam_policy_document.amazonmq_log_publishing_policy.json}"
+  policy_name     = "amazonmq-log-publishing-policy"
+}
