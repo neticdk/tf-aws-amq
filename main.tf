@@ -121,6 +121,6 @@ data "aws_iam_policy_document" "amazonmq_log_publishing_policy" {
 }
 
 resource "aws_cloudwatch_log_resource_policy" "amazonmq_log_publishing_policy" {
-  policy_document = "${data.aws_iam_policy_document.amazonmq_log_publishing_policy.json}"
+  policy_document = data.aws_iam_policy_document.amazonmq_log_publishing_policy.json
   policy_name     = "amazonmq-log-publishing-policy"
 }
