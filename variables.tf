@@ -102,6 +102,12 @@ variable "password" {
   default     = ""
 }
 
+variable "password_count" {
+  description = "Number of passwords to generate for users. Must be at least the number of users."
+  type        = number
+  default     = 100
+}
+
 variable "configuration_data" {
   description = "The broker configuration in XML format"
   type        = string

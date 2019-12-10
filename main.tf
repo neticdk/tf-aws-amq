@@ -15,7 +15,6 @@ locals {
     groups         = u.groups
     console_access = u.console_access
   }]
-  password_count = var.additional_users == null ? 0 : element(sort([for x in values(var.additional_users) : x.id]), length(values(var.additional_users)) - 1) + 1
 
   tags = {
     Terraform = "true"
@@ -28,7 +27,12 @@ resource "random_string" "password" {
 }
 
 resource "random_password" "additional_user_password" {
-  count   = local.password_count
+  # we would rather loop over users created but terraform doesn't allow us to
+  # loop over created resources yet, so we just generate a static acmount of
+  # passwords. This amount must be larger than the number of users. This makes
+  # sure that passwords don't get mixed around if we remove a user in the middle
+  # of the additional_users value.
+  count   = var.password_count
   length  = 16
   special = false
 }
