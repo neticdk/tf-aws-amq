@@ -123,6 +123,6 @@ variable "apply_immediately" {
 variable "auto_minor_version_upgrade" {
   description = "Enables automatic upgrades to new minor versions for brokers, as Apache releases the versions."
   type        = bool
-  default     = false
+  default     = true
 }
 
