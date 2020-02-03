@@ -39,7 +39,7 @@ resource "random_password" "additional_user_password" {
 
 resource "aws_mq_broker" "this" {
   apply_immediately          = var.apply_immediately
-  auto_minor_version_upgrade = true
+  auto_minor_version_upgrade = var.auto_minor_version_upgrade
   broker_name                = var.broker_name
 
   configuration {
