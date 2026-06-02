@@ -7,6 +7,7 @@
 
 variable "tags" {
   description = "A map of tags to add to all resources"
+  type        = map
   default     = {}
 }
 
@@ -23,11 +24,13 @@ variable "engine_version" {
 
 variable "deployment_mode" {
   description = "Deployment Mode"
+  type        = string
   default     = "ACTIVE_STANDBY_MULTI_AZ" // "SINGLE_INSTANCE"
 }
 
 variable "host_instance_type" {
   description = "EC2 Instance Type"
+  type        = string
   default     = "mq.t2.micro"
 }
 
@@ -45,25 +48,8 @@ variable "security_groups" {
 
 variable "subnet_ids" {
   description = "The list of subnet IDs in which to launch the broker"
+  type        = list
   default     = []
-}
-
-variable "maintenance_window_start_time_day_of_week" {
-  description = "The day of the week"
-  type        = string
-  default     = "SUNDAY"
-}
-
-variable "maintenance_window_start_time_time_of_day" {
-  description = "The time, in 24-hour format"
-  type        = string
-  default     = "02:00"
-}
-
-variable "maintenance_window_start_time_time_zone" {
-  description = "The time zone, UTC by default, in either the Country/City format, or the UTC offset format"
-  type        = string
-  default     = "CET"
 }
 
 variable "logs_general" {

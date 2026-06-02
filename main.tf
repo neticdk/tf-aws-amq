@@ -51,17 +51,9 @@ resource "aws_mq_broker" "this" {
   engine_type         = "ActiveMQ"
   engine_version      = var.engine_version
   host_instance_type  = var.host_instance_type
-  publicly_accessible = false
+  publicly_accessible = var.publicly_accessible
   security_groups     = var.security_groups
   subnet_ids          = var.subnet_ids
-
-  /* NOTE: AWS currently does not support updating the maintenance window beyond resource creation
-  maintenance_window_start_time {
-    day_of_week = var.maintenance_window_start_time_day_of_week
-    time_of_day = var.maintenance_window_start_time_time_of_day
-    time_zone   = var.maintenance_window_start_time_time_zone
-  }
-  */
 
   logs {
     general = var.logs_general
