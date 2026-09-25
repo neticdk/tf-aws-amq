@@ -7,7 +7,7 @@
 
 variable "tags" {
   description = "A map of tags to add to all resources"
-  type        = map
+  type        = map(string)
   default     = {}
 }
 
@@ -42,13 +42,13 @@ variable "publicly_accessible" {
 
 variable "security_groups" {
   description = "The list of security group IDs assigned to the broker"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "subnet_ids" {
   description = "The list of subnet IDs in which to launch the broker"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
